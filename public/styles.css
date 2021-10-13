@@ -1,0 +1,174 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    background: linear-gradient(127deg, #8b8b8b, rgb(72 69 69));
+    background-attachment: fixed;
+}
+
+:root{
+    --msgBoxHeight:100px;
+    font-size: 16px;
+}
+
+.container{
+    height: 100vh;
+    padding: 15px 10px;
+}
+
+.msgBox{
+    height: var(--msgBoxHeight);
+}
+
+.chatBox{
+    height: calc(90% - var(--msgBoxHeight) );
+    margin-bottom: 0px;
+    /* overflow: hidden; */
+}
+.row.chatBox > div{
+    background:linear-gradient(to bottom right, hsl(240deg 40% 52%), #222222);
+    min-height: 100%; 
+    border-radius: 8px;
+    border: 1.5px outset #919191;
+    box-shadow: 1px 2px 2px #3d3d3d, 1px 2px 7px #131313;
+    display: flex;
+    flex-flow:column;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.msgBox > .input-field{
+    padding: 0px;
+}
+.msgBox button{
+    width: 119px;
+}
+.msgBox #msgInput{
+    width: calc(100% - 130px);
+    color: white;
+}
+
+.infoBox {
+    height: 30px;
+    margin: 0px;
+    margin-top: 3px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.infoBox .note{
+    opacity: 0.9;
+    color: blanchedalmond;
+    font-style: italic;
+}
+
+.infoBox .profile{
+    color: #cdcdcd;
+    font-style: italic;
+    border-top: 1px solid #7e7e7e;
+    width: 200px;
+    text-align: right;
+    max-width: 50%;
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+}
+
+.infoBox .profile span{
+    margin-left: 7px;    
+}
+
+.hidden{
+    display: none;
+}
+
+.setUsernameBox{
+    margin-top: 35vh;
+}
+
+.setUsernameBox input[type=text]{
+    width: calc(100% - 75px);
+    float: left;
+    color: white;
+    font-weight: 200;
+    font-size: 3rem;
+    height: 2em;
+}
+
+.setUsernameBox a{
+    margin: 30px 0 0 15px;
+}
+
+.setUsernameSubmit i{
+    background: linear-gradient(318deg, #805ad6, transparent);
+}
+.messageBox{
+    padding: 10px 5px;
+    clear: both;
+    width: 100%;
+}
+
+.messageBox > span{
+    padding-left: 4px;
+    display: inline-block;
+    min-width: 100px;
+    border-bottom: 1px solid #9f9f9f;
+    font-size: 0.9rem;
+    color: #e2e2e2;
+    margin-bottom:4px;
+}
+
+.messageBox div > p:first-of-type{
+    padding: 10px 13px;
+    color: #d4d4d4;
+    background: hsl(0deg 0% 58% / 50%);
+    margin-top: 4px;
+    width: 60%;
+    border-radius: 6px 8px 6px 0px;
+    box-shadow: 1px 2px 3px 2px #23232321, 0px 0px 5px 2px #21212133;
+    border: 2px outset #767676;
+}
+
+.messageBox div > p:nth-of-type(2){
+    color: #7d7d7d;
+    width: 60%;
+    text-align: right;
+    padding-right: 10px;
+    font-style: italic;
+    font-size: 0.7rem;
+}
+
+.messageBox.myMessage div{
+    text-align: right;
+}
+
+.messageBox.myMessage div{
+    clear: right;
+    /* display: flex;
+    justify-content: end; */
+}
+
+.messageBox.myMessage > span{
+    float: right;
+}
+
+.messageBox.myMessage div > p{
+    clear: right;
+    float: right;
+    text-align: left;
+    border-radius: 6px 8px 0px 8px;
+}
+
+.messageBox.myMessage div > p:nth-of-type(2){
+    text-align: left;
+}
+
+.chatNotification{
+    text-align: center;
+    /* border-bottom: 1px solid #b1b1b1; */
+    color: #dadada;
+    margin-bottom: 20px;
+}

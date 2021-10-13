@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSockets 101</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet"/>
+
+</head>
+<body>
+
+    <div class="container">
+    
+        <div class="setUsernameBox row">
+
+            <div class="input-field col s12">
+                <input id="setUsername" class=""  type="text" placeholder="Choose a username..." autocomplete="off" list="usernames" maxlength="25" />
+                <datalist id="usernames">
+                </datalist>
+                <a class="btn-floating btn-large waves-effect waves-light red setUsernameSubmit"><i class="material-icons">check</i></a>
+            </div>
+
+        </div>
+
+        <div class="chatBox row hidden" >
+            <div class="col s12 offset-s0 l6 offset-l3 chatBoxWindow">
+                
+            </div>
+        </div>
+        
+        <div class="msgBox row hidden" >
+            <div class="col col s12 offset-s0 l6 offset-l3">
+                <div class="infoBox">
+                    <div class="note"></div>
+                    <div class="profile">
+                        <i class="material-icons">face</i>
+                        <span></span>
+                    </div>
+                </div>
+            </div>  
+
+            <div class="input-field col col s12 offset-s0 l6 offset-l3">
+                <input id="msgInput" class=""  type="text" placeholder="Send a message..." />
+                <button class="btn waves-effect waves-light sendMsgButton" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                  </button>
+            </div>
+        </div>    
+    
+    </div>
+        
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="chat.js" type="module"></script>
+
+</body>
+</html>
