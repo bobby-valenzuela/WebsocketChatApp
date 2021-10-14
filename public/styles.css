@@ -172,3 +172,82 @@ body{
     color: #dadada;
     margin-bottom: 20px;
 }
+
+.chatBoxWindow{
+    position: relative;
+}
+
+.chatBoxWindow .viewActiveUers{
+    position: absolute;
+    top:20px;
+    right: 20px;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+.activeUserList{
+    position: absolute;
+    top: 50%;
+    transform: translate(0px, -50%);
+    width: calc(100% - 25px);
+    min-height: 300px;
+    max-height: 400px;
+    background: #3a3a3a;
+    border-radius: 6px;
+    box-shadow: 1px 2px 5px 2px #141414;
+    border: 1px outset #514e4e;
+    color: #d5d5d5;
+    overflow-y: scroll;
+}
+
+.activeUserList .titleBar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 8px 15px;
+}
+
+.activeUserList .titleBar div {
+    flex-basis: 25%;
+    text-align: right;
+}
+
+.activeUserList .titleBar div:nth-of-type(2) {
+    flex-basis: 50%;
+    text-align: center;
+}
+
+.activeUserList .titleBar div:nth-of-type(3) {
+    cursor: pointer;
+}
+
+.activeUserList > p {
+    padding: 7px 15px;
+}
+
+.activeUserList > p i {
+    vertical-align: middle;
+    margin-right:  7px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 18pxl
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

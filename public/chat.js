@@ -16,12 +16,16 @@ const setUsernameBox = document.querySelector('.setUsernameBox');
 const setUsernameInp = document.querySelector('#setUsername');
 const setUsernameBtn = document.querySelector('.setUsernameSubmit');
 const usernameDataList = document.getElementById('usernames');
+const activeUserListBtn = document.querySelector('.chatBoxWindow .viewActiveUers');
+const activeUserList = document.querySelector('.chatBoxWindow .activeUserList');
+const closeActiveUserListBtn = document.querySelector('.closeActiveUserList');
 
+let activeUsers;
 let username;
 let typingTimer;
 let isLoggedIn;
 
-////////// Actions
+////////// Utility functions
 
 // List any stored names on login screen
 const addStoredNames = ()=>{
@@ -62,12 +66,20 @@ const  sendMsgHandler = ()=>{
 };
 
 // Handle stopped typing
-const handleNoInput = ()=>{
+const handleNoInput = ()=> socket.emit('nottyping');
 
-    socket.emit('nottyping');
+const updateActiveUsers = users => activeUsers = users;
 
+const createChatNotification = ( note, username, users ) =>{
+
+    if (!isLoggedIn || !username) return;
+    const chatNotification = document.createElement('div');
+    chatNotification.classList.add('chatNotification','messageBox');
+    chatNotification.textContent = note;
+    chatBoxWindow.insertAdjacentElement('beforeend',chatNotification);
+    M.toast({html: note})
+    updateActiveUsers(users);
 };
-
 
 
 ////////// Listeners
@@ -100,9 +112,38 @@ sendMsgButton.addEventListener('click', function(){
     
 });
 
+// View active user list
+activeUserListBtn.addEventListener('click', function(){
+
+    // Clear chat list
+    [...activeUserList.querySelectorAll('p')].forEach(p=>p.remove());
+
+    for ( let [k,v] of Object.entries(activeUsers) ){
+
+        const userRecord = document.createElement('p');
+        userRecord.textContent = v;
+        const icon = document.createElement('i');
+        icon.classList.add('material-icons');
+        icon.textContent = 'person';
+        userRecord.insertAdjacentElement('afterbegin',icon);
+        activeUserList.insertAdjacentElement('beforeend', userRecord);
+
+    }
+
+    activeUserList.classList.remove('hidden');
+
+});
+
+// Close active user list
+closeActiveUserListBtn.addEventListener('click', ()=> activeUserList.classList.add('hidden') );
+
 
 ////////// Socket event Handling
 
+socket.on('nottyping', sid => infoBoxNote.textContent = ``);
+socket.on('typing', username => infoBoxNote.textContent = `${username} is typing...`);
+socket.on('enteredChat', ( username, users ) => createChatNotification(`📢 ${username} has joined the chat`, username, users));
+socket.on('leavingChat', ( username, users ) => createChatNotification(`📢 ${username} has left the chat`, username, users));
 
 socket.on('sendMsg', ( { username: msgUsername, message, time } ) => {
     const newMessage = document.createElement('div');
@@ -133,31 +174,4 @@ socket.on('sendMsg', ( { username: msgUsername, message, time } ) => {
 
 });
 
-socket.on('typing', username => {
-    
-    infoBoxNote.textContent = `${username} is typing...`;
 
-});
-
-socket.on('nottyping', sid => infoBoxNote.textContent = ``);
-
-socket.on('enteredChat', username => { 
-    if (!isLoggedIn) return;
-    
-    const chatNotification = document.createElement('div');
-    chatNotification.classList.add('chatNotification','messageBox');
-    chatNotification.textContent = `📢 ${username} has joined the chat`;
-    chatBoxWindow.insertAdjacentElement('beforeend',chatNotification);
-
-    // alert(username + ' has joined the chat!')
-});
-
-
-socket.on('leaving', username => {
-    if (!isLoggedIn || !username) return;
-    
-    const chatNotification = document.createElement('div');
-    chatNotification.classList.add('chatNotification','messageBox');
-    chatNotification.textContent = `📢 ${username} has left the chat`;
-    chatBoxWindow.insertAdjacentElement('beforeend',chatNotification);
-});

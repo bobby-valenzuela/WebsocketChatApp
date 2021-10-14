@@ -50,7 +50,7 @@ io.on('connection', socket =>{
     socket.on('enteredChat', username => {
         // broadcast -> this socket is emitting to all other sockets
         connectedUsers[socketId] = username;
-        socket.broadcast.emit('enteredChat', username);
+        io.emit('enteredChat', username, connectedUsers);
 
     });
     
@@ -67,7 +67,11 @@ io.on('connection', socket =>{
 
     });
 
-    socket.on('disconnect', data => io.emit('leaving', connectedUsers[socketId]));
+    socket.on('disconnect', data =>{
+        const deletedUser = connectedUsers[socketId];
+        delete connectedUsers[socketId];
+        io.emit('leavingChat', deletedUser, connectedUsers )
+    });
 
     // to individual socketid (private message)
     io.to(socketId).emit(/* ... */);
