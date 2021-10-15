@@ -81,6 +81,10 @@ body{
     margin-left: 7px;    
 }
 
+.infoBox div{
+    flex-basis: 40%;    
+}
+
 .hidden{
     display: none;
 }
@@ -177,28 +181,31 @@ body{
     position: relative;
 }
 
-.chatBoxWindow .viewActiveUers{
-    position: absolute;
-    top:20px;
-    right: 20px;
+.infoBox .viewActiveUers{
+    /* position: absolute; */
+    /* top:20px;
+    right: 20px; */
     font-size: 20px;
     color: white;
     cursor: pointer;
+    flex-basis: 10%;
+    text-align: center;
+    margin-top: 10px;
 }
 
 .activeUserList{
     position: absolute;
-    top: 50%;
+    bottom: 100px;
     transform: translate(0px, -50%);
     width: calc(100% - 25px);
     min-height: 300px;
-    max-height: 400px;
+    max-height: 500px;
     background: #3a3a3a;
     border-radius: 6px;
     box-shadow: 1px 2px 5px 2px #141414;
     border: 1px outset #514e4e;
     color: #d5d5d5;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
 
 .activeUserList .titleBar {
@@ -250,4 +257,17 @@ body{
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
+  }
+
+  @media only screen and (max-width:500px){
+      #setUsername{
+          font-size: 1.5rem;
+          margin-top: 25px;
+      }
+      .messageBox{
+          font-size: 12px;
+      }
+      .messageBox div > p:first-of-type{
+          width: 85%;
+      }
   }

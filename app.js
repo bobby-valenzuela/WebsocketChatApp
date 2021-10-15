@@ -9,7 +9,11 @@ const server = app.listen( port, ()=>console.log(`Listening on ${port}...`));
 
 // Socket Setup
 const serverOpts = { 
-        cors: { origin: '*' }
+        cors: {
+             origin: '*' 
+            //  , origin: ['http://localhost:300', 'https://admin.socket.io/']
+        }
+        
     };
 const io = socket(server, serverOpts);
 
@@ -66,15 +70,27 @@ io.on('connection', socket =>{
         io.emit('sendMsg', {...data, time} );
 
     });
-
+    
     socket.on('disconnect', data =>{
         const deletedUser = connectedUsers[socketId];
         delete connectedUsers[socketId];
         io.emit('leavingChat', deletedUser, connectedUsers )
     });
-
+    
     // to individual socketid (private message)
-    io.to(socketId).emit(/* ... */);
+    // io.to(socketId).emit(/* ... */);
+    
+    // To individual room - functions as broadcast - every user/connection is in a room with a name equal to their socketid
+    // socket.to(room).emit("new-message", message)
+
+    // to do - joining custom rooms
+    socket.on('join-room', room =>{
+        // users can join multiple rooms
+        socket.join(room);
+        
+
+    });
+
 
 });
 

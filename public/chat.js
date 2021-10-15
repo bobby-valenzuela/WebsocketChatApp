@@ -16,7 +16,7 @@ const setUsernameBox = document.querySelector('.setUsernameBox');
 const setUsernameInp = document.querySelector('#setUsername');
 const setUsernameBtn = document.querySelector('.setUsernameSubmit');
 const usernameDataList = document.getElementById('usernames');
-const activeUserListBtn = document.querySelector('.chatBoxWindow .viewActiveUers');
+const activeUserListBtn = document.querySelector('.viewActiveUers');
 const activeUserList = document.querySelector('.chatBoxWindow .activeUserList');
 const closeActiveUserListBtn = document.querySelector('.closeActiveUserList');
 
@@ -175,3 +175,8 @@ socket.on('sendMsg', ( { username: msgUsername, message, time } ) => {
 });
 
 
+////// to do
+// socket.emit('join-room','room');
+
+// use last para as cb for some function to execute for thi soket after server action complete
+// socket('send-private-msg', username, ()=> console.log('Msg Sent!'))
