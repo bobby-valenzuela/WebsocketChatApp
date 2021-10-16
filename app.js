@@ -2,6 +2,15 @@ const express = require('express');
 const app = express();
 const socket = require('socket.io');
 const moment = require('moment'); 
+var sense = require("sense-hat-led").sync;
+ 
+// sense.showMessage("One small step for Pi!");
+// sense.showMessage("");
+// sense.clear(255, 255, 255);
+// sense.clear(0, 0, 0);
+// sense.lowLight = true;
+// sense.sleep(2);
+// sense.lowLight = false; 
 
 // Start Server / Listen to incoming requests 
 const port = 3000;  // In prod, will usually use port 80 (http)/443 (https)
@@ -68,6 +77,8 @@ io.on('connection', socket =>{
         // emit to all
         const time = moment().calendar();  
         io.emit('sendMsg', {...data, time} );
+        // sense.showMessage(data.message, 0.07, [11,160,215]);
+        // sense.clear(0, 0, 0);
 
     });
     
