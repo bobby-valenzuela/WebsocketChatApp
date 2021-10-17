@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const socket = require('socket.io');
 const moment = require('moment'); 
-var sense = require("sense-hat-led").sync;
+// var sense = require("sense-hat-led").sync;
  
 // sense.showMessage("One small step for Pi!");
 // sense.showMessage("");
@@ -13,7 +13,7 @@ var sense = require("sense-hat-led").sync;
 // sense.lowLight = false; 
 
 // Start Server / Listen to incoming requests 
-const port = 3000;  // In prod, will usually use port 80 (http)/443 (https)
+const port = 3000 || process.env.PORT;  
 const server = app.listen( port, ()=>console.log(`Listening on ${port}...`));
 
 // Socket Setup
@@ -61,7 +61,6 @@ io.on('connection', socket =>{
     });
     
     socket.on('enteredChat', username => {
-        // broadcast -> this socket is emitting to all other sockets
         connectedUsers[socketId] = username;
         io.emit('enteredChat', username, connectedUsers);
 
@@ -87,20 +86,37 @@ io.on('connection', socket =>{
         delete connectedUsers[socketId];
         io.emit('leavingChat', deletedUser, connectedUsers )
     });
+
     
-    // to individual socketid (private message)
+    ///// EMITTING OPTIONS
+
+    // // Emit to call connected sockets
+    // io.emit('enteredChat', username, connectedUsers);
+
+    // // from this socket to individual socketid (private message)
     // io.to(socketId).emit(/* ... */);
     
-    // To individual room - functions as broadcast - every user/connection is in a room with a name equal to their socketid
+    // // from this socket to self (same socket)
+    // socket.emit('something', 'Hey!');
+
+    // // broadcast -> from this socket to all other sockets other than itself
+    // socket.broadcast.emit('typing', username);
+    
+    
+    
+    ///// ROOM OPTIONS
+    
+    // // broadcast -> from this socket to all other sockets in this room other than itself
+    // socket.broadcast.to(room).emit("new-message", message)
+    
+    // // broadcast -> from this socket to all sockets in this room including itself
     // socket.to(room).emit("new-message", message)
 
-    // to do - joining custom rooms
-    socket.on('join-room', room =>{
-        // users can join multiple rooms
-        socket.join(room);
-        
-
-    });
+    // // to do - joining custom rooms
+    // socket.on('join-room', room =>{
+    //     // users can join multiple rooms
+    //     socket.join(room);
+    // });
 
 
 });
