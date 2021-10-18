@@ -13,7 +13,7 @@ const moment = require('moment');
 // sense.lowLight = false; 
 
 // Start Server / Listen to incoming requests 
-const port = 3000 || process.env.PORT;  
+const port = 5000 || process.env.PORT;  
 const server = app.listen( port, ()=>console.log(`Listening on ${port}...`));
 
 // Socket Setup
