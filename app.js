@@ -13,7 +13,7 @@ const moment = require('moment');
 // sense.lowLight = false; 
 
 // Start Server / Listen to incoming requests 
-const port = process.env.PORT || 80;  
+const port = process.env.PORT || 3000;  
 const server = app.listen( port, ()=>console.log(`Listening on ${port}...`));
 
 // Socket Setup
@@ -87,6 +87,11 @@ io.on('connection', socket =>{
         io.emit('leavingChat', deletedUser, connectedUsers )
     });
 
+    socket.on('peer-connection', peerId => {
+        
+        socket.broadcast.emit('peer-connection-established', peerId);
+
+    });
     
     ///// EMITTING OPTIONS
 

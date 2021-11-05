@@ -11,6 +11,7 @@ const infoBoxProfile = document.querySelector('.infoBox .profile span');
 const chatBox = document.querySelector('.chatBox');
 const chatBoxWindow = document.querySelector('.chatBox .chatBoxWindow');
 const msgBox = document.querySelector('.msgBox');
+const vidBox = document.getElementById('vid-box');
 const sendMsgButton = document.querySelector('.sendMsgButton');
 const setUsernameBox = document.querySelector('.setUsernameBox');
 const setUsernameInp = document.querySelector('#setUsername');
@@ -39,6 +40,25 @@ const addStoredNames = ()=>{
 
 };
 
+// Start host stream
+const startStream = async ()=>{
+
+    // If not host, just play host stream and return
+    if(username !== 'admin') return document.getElementById('client-stream').play();
+
+    let myStream = await navigator.mediaDevices.getUserMedia({
+        video:true,
+        audio:false
+    });
+
+    // Visible to Host
+    addVideoStream(myStream, 'vid-main');
+
+    // On new peer - send host stream
+    socket.on('peer-connection-established', peerId => peerSelf.call(peerId, myStream));
+
+};
+
 // Login
 const login = ()=>{
     username = setUsernameInp.value;
@@ -53,6 +73,7 @@ const login = ()=>{
     // Emit entered chat msg
     socket.emit('enteredChat', username);
     isLoggedIn = true;
+    startStream();
 };
 
 // Send message
@@ -81,8 +102,21 @@ const createChatNotification = ( note, username, users ) =>{
     updateActiveUsers(users);
 };
 
+// Handle Vid Streaming (host vid to DOM)
+const addVideoStream = (stream, id) => {
+    
+    const video = document.createElement('video');
+    video.id = id;
+    video.srcObject = stream
+    video.addEventListener('loadedmetadata', ()=>{
+        video.play()
+    })
+    
+    vidBox.insertAdjacentElement('beforeend', video);
 
-////////// Listeners
+}
+
+////////// Listeners (input handling)
 
 // Login listener
 setUsernameBtn.addEventListener('click', login);
@@ -173,6 +207,37 @@ socket.on('sendMsg', ( { username: msgUsername, message, time } ) => {
       });
 
 });
+
+
+// PEERJS
+
+const peerSelf = new Peer(undefined, {
+    host:'/',
+    port:'3001',
+    debug:3
+})
+
+// Once connected emit peerid
+peerSelf.on('open', peerId => socket.emit('peer-connection', peerId));
+
+// When client receives a call - answer and display stream
+peerSelf.on('call', call => {
+
+    call.answer()        
+
+    // Receive calls from other users (host) - add their video stream
+    call.on('stream', hostStream => {
+        
+        const video = document.createElement('video');
+        video.id = 'client-stream';
+        video.srcObject = hostStream
+        vidBox.insertAdjacentElement('beforeend', video);
+        // Playing will be done on login
+    });
+
+});
+
+
 
 
 ////// to do
