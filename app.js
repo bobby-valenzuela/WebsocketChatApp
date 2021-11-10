@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const socket = require('socket.io');
 const moment = require('moment'); 
-// var sense = require("sense-hat-led").sync;
+var sense = require("sense-hat-led").sync;
  
 // sense.showMessage("One small step for Pi!");
 // sense.showMessage("");
@@ -76,8 +76,8 @@ io.on('connection', socket =>{
         // emit to all
         const time = moment().calendar();  
         io.emit('sendMsg', {...data, time} );
-        // sense.showMessage(data.message, 0.07, [11,160,215]);
-        // sense.clear(0, 0, 0);
+        sense.showMessage(data.message, 0.07, [11,160,215]);
+        sense.clear(0, 0, 0);
 
     });
     
