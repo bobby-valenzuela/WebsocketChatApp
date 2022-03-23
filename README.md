@@ -13,3 +13,4 @@ Pretty awesome to enabled port-forwarding and watch messages come in on the the 
 
 
 Demo Clip: https://link.us1.storjshare.io/s/jwsozb4heiczaappgchverilgf4q/clips/pichatstream_demo.mp4
+In the clip above I'm loggin in as a client while the PI is already broadcasting as the host.
